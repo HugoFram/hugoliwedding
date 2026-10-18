@@ -9,6 +9,6 @@
     "dev": "node scripts/serve.mjs",
     "build": "node scripts/build.mjs",
     "test": "node --test",
-    "check": "node --check public/assets/app.mjs && node --check public/assets/countdown.mjs && node --check scripts/serve.mjs && node --check scripts/build.mjs"
+    "check": "node --check public/assets/app.mjs && node --check public/assets/countdown.mjs && node --check scripts/serve.mjs && node --check scripts/build.mjs && node --check scripts/release.mjs && node --check scripts/deploy-sftp.mjs && node --check scripts/validate-promotion.mjs && node --check scripts/verify-deployment.mjs"
   }
 }

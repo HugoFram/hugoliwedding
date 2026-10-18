@@ -45,8 +45,8 @@ Si la date change, mettre à jour le HTML (texte et métadonnées), le compte à
 
 ## Hébergement et suite du projet
 
-Voir [le guide STRATO](docs/STRATO.md) et [le plan du projet](docs/PLAN.md).
+Voir [le pipeline test → production](docs/DEPLOYMENT.md), [le guide STRATO](docs/STRATO.md) et [le plan du projet](docs/PLAN.md).
 
-Adresse proposée : `https://hugoli-mariage.frammery.com/`, à confirmer et configurer dans STRATO. La variante avec `www` est optionnelle et doit être configurée séparément, avec un certificat adapté.
+Les sous-domaines `hugoli-mariage-test.frammery.com` et `hugoli-mariage.frammery.com` sont associés à leurs dossiers respectifs chez STRATO. Après configuration du secret SFTP et des certificats HTTPS, chaque modification de `main` est déployée sur le site de test. Les paramètres publics de connexion sont déjà renseignés. La publication en production est une action manuelle réutilisant exactement une version de test réussie. La procédure et le retour à une ancienne version sont décrits dans le guide du pipeline.
 
 Le code comprend une directive `noindex, nofollow` pour demander aux moteurs de recherche de ne pas indexer le site. Cette directive ne limite pas l’accès. Le dépôt GitHub étant public, son contenu est également public. Si une restriction d’accès est souhaitée plus tard, la définir au niveau de l’hébergement avant d’ajouter des données d’invités.

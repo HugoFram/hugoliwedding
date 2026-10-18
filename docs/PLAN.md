@@ -45,11 +45,8 @@ Champs à envisager : nom/foyer, présence, nombre d’invités autorisés, repa
 
 Remerciements et lien vers un album photo partagé. Définir l’accès à l’album avant publication.
 
-## Mise en ligne restante
+## Déploiement test → production
 
-1. Confirmer le sous-domaine, proposé sans `www` : `hugoli-mariage.frammery.com`.
-2. Déposer le contenu de `dist/` dans un répertoire STRATO dédié.
-3. Associer le sous-domaine à ce répertoire et activer HTTPS.
-4. Vérifier le site depuis un téléphone et importer le calendrier dans une application réelle.
+Les sous-domaines `hugoli-mariage.frammery.com` et `hugoli-mariage-test.frammery.com` sont créés et redirigent vers les dossiers portant les mêmes noms.
 
-Le site n’a pas encore été publié chez STRATO. Aucun identifiant d’hébergement n’a été fourni.
+Le pipeline GitHub Actions est préparé : déploiement automatique de `main` sur le site de test, puis promotion manuelle d’une archive testée vers la production. Voir [la configuration et la procédure](DEPLOYMENT.md). Le premier transfert réel reste à vérifier après configuration du secret SFTP et des certificats HTTPS ; les paramètres publics de connexion sont déjà renseignés.

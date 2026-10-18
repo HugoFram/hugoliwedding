@@ -1,0 +1,71 @@
+name: Publier en production
+run-name: 'Production depuis le test #${{ inputs.test_run_id }}'
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_run_id:
+        description: 'Numéro de l’exécution réussie Déployer en test (visible dans son URL et son résumé)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: production
+      url: https://hugoli-mariage.frammery.com/
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+      - name: Vérifier l’origine et la réussite du déploiement de test
+        id: source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TEST_RUN_ID: ${{ inputs.test_run_id }}
+        run: node scripts/validate-promotion.mjs "$TEST_RUN_ID"
+      - name: Récupérer exactement les fichiers testés
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          name: hugoli-site-${{ steps.source.outputs.attempt }}
+          path: artifacts/release/
+          run-id: ${{ steps.source.outputs.run_id }}
+          github-token: ${{ github.token }}
+      - name: Installer le client SFTP
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install --yes --no-install-recommends sshpass
+      - name: Promouvoir la version validée
+        run: node scripts/deploy-sftp.mjs production artifacts/release
+        env:
+          EXPECTED_SHA: ${{ steps.source.outputs.sha }}
+          EXPECTED_RUN_ID: ${{ steps.source.outputs.run_id }}
+          EXPECTED_ATTEMPT: ${{ steps.source.outputs.attempt }}
+          STRATO_SFTP_HOST: ${{ vars.STRATO_SFTP_HOST }}
+          STRATO_SFTP_USER: ${{ vars.STRATO_SFTP_USER }}
+          STRATO_SSH_KNOWN_HOSTS: ${{ vars.STRATO_SSH_KNOWN_HOSTS }}
+          STRATO_SFTP_PASSWORD: ${{ secrets.STRATO_SFTP_PASSWORD }}
+      - name: Vérifier la production en HTTPS
+        run: node scripts/verify-deployment.mjs production artifacts/release
+      - name: Résumé
+        env:
+          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+          SOURCE_RUN: ${{ steps.source.outputs.run_id }}
+        run: |
+          echo '### Version publiée en production' >> "$GITHUB_STEP_SUMMARY"
+          echo 'https://hugoli-mariage.frammery.com/' >> "$GITHUB_STEP_SUMMARY"
+          echo "Commit : $SOURCE_SHA — exécution de test : $SOURCE_RUN" >> "$GITHUB_STEP_SUMMARY"

@@ -2,11 +2,11 @@
 
 ## Adresse
 
-La demande mentionnait `https://www.hugoli-mariage.frammery`. Avec le domaine existant `frammery.com`, l’adresse proposée est :
+Les sous-domaines et les redirections internes vers leurs dossiers dédiés sont créés. L’adresse de production est :
 
 **`https://hugoli-mariage.frammery.com/`**
 
-Si la variante `https://www.hugoli-mariage.frammery.com/` est souhaitée, elle doit aussi être déclarée et couverte par le certificat HTTPS ; ne pas supposer qu’un certificat couvrant un seul niveau de sous-domaines couvre cette variante imbriquée. Confirmer l’adresse avant configuration.
+Le site de test est `https://hugoli-mariage-test.frammery.com/`. Voir [le guide du pipeline](DEPLOYMENT.md) pour les déploiements automatiques en test et la promotion manuelle en production. Les étapes ci-dessous restent utiles pour comprendre la configuration STRATO ou faire un transfert manuel.
 
 ## Préparer les fichiers
 
@@ -44,7 +44,7 @@ Les identifiants ne doivent pas être ajoutés au dépôt. Il n’est pas néces
 - Le fichier calendrier importe le **10 juin 2028 uniquement**, en événement sur une journée entière, avec le bon lieu.
 - Le site principal de `frammery.com` continue de fonctionner.
 
-Pour une mise à jour, exécuter de nouveau la préparation et transférer les fichiers de `dist/`. Si le navigateur conserve d’anciens fichiers, effectuer un rechargement complet. Une automatisation GitHub → SFTP pourra être envisagée ultérieurement ; elle n’est pas configurée dans cette première version.
+Pour les mises à jour habituelles, utiliser le [pipeline GitHub Actions → SFTP](DEPLOYMENT.md). Éviter de mélanger un transfert manuel et un déploiement du pipeline au même moment. Le pipeline construit des chemins de ressources propres à chaque version et conserve les précédents.
 
 ## Documentation officielle consultée
 
