@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="500" viewBox="0 0 360 500" fill="none">
+  <defs>
+    <g id="leaf">
+      <path d="M0 0C-16-4-38-12-35-27L-22-25-26-44-10-36 0-57 10-36 26-44 22-25 35-27C38-12 16-4 0 0Z" fill="#879572" fill-opacity=".19" stroke="#697c58" stroke-width="1.2" stroke-linejoin="round"/>
+      <path d="M0-3V-48M0-14-24-27M0-14 24-27M0-27-15-36M0-27 15-36" stroke="#697c58" stroke-width=".8"/>
+    </g>
+    <g id="flower">
+      <path d="M0-5C-20-18-13-34 0-29 13-34 20-18 0-5Z" fill="#f8eee6" stroke="#b68b81" stroke-width="1"/>
+      <path d="M0-5C-20-18-13-34 0-29 13-34 20-18 0-5Z" fill="#f8eee6" stroke="#b68b81" stroke-width="1" transform="rotate(72)"/>
+      <path d="M0-5C-20-18-13-34 0-29 13-34 20-18 0-5Z" fill="#f8eee6" stroke="#b68b81" stroke-width="1" transform="rotate(144)"/>
+      <path d="M0-5C-20-18-13-34 0-29 13-34 20-18 0-5Z" fill="#f8eee6" stroke="#b68b81" stroke-width="1" transform="rotate(216)"/>
+      <path d="M0-5C-20-18-13-34 0-29 13-34 20-18 0-5Z" fill="#f8eee6" stroke="#b68b81" stroke-width="1" transform="rotate(288)"/>
+      <circle r="6" fill="#c3a66a"/><circle r="2" fill="#8b6e4e"/>
+    </g>
+    <g id="grapes" fill="#946574" fill-opacity=".45" stroke="#855d6c" stroke-width="1">
+      <circle cx="-9" cy="1" r="9"/><circle cx="9" cy="1" r="9"/>
+      <circle cx="-17" cy="16" r="9"/><circle cx="0" cy="17" r="9"/><circle cx="17" cy="16" r="9"/>
+      <circle cx="-9" cy="32" r="9"/><circle cx="9" cy="32" r="9"/>
+      <circle cy="47" r="9"/>
+      <path d="M0-8Q-4-21 6-28" fill="none" stroke="#697c58" stroke-width="1.3"/>
+    </g>
+  </defs>
+  <g stroke="#697c58" stroke-width="1.5" stroke-linecap="round">
+    <path d="M325 487C239 443 272 366 207 319S172 212 121 163 94 89 58 24"/>
+    <path d="M254 416Q188 402 167 364M226 343Q286 296 298 247M183 279Q118 282 87 237M166 220Q218 169 213 129M125 168Q65 169 35 131M98 116Q147 78 139 42"/>
+    <path d="M284 452C326 447 326 414 304 420 287 424 300 441 311 432M264 295C287 290 282 270 269 275 257 280 270 292 277 285M104 256C75 276 61 254 72 245 83 236 94 251 82 254M185 158C183 133 164 136 164 148 164 160 179 159 176 150M71 68C42 70 40 49 52 46 65 42 69 57 58 58"/>
+    <path d="M278 404Q310 389 321 367M146 189Q112 198 100 212M145 204Q154 167 145 152" stroke-width="1"/>
+  </g>
+  <use href="#leaf" transform="translate(172 368) rotate(-58) scale(1.13)"/>
+  <use href="#leaf" transform="translate(291 262) rotate(32) scale(1.07)"/>
+  <use href="#leaf" transform="translate(98 244) rotate(-69) scale(.94)"/>
+  <use href="#leaf" transform="translate(214 139) rotate(19) scale(.9)"/>
+  <use href="#leaf" transform="translate(45 137) rotate(-52) scale(.78)"/>
+  <use href="#leaf" transform="translate(137 57) rotate(25) scale(.7)"/>
+  <use href="#flower" transform="translate(236 381) rotate(-12) scale(1.15)"/>
+  <use href="#flower" transform="translate(190 242) rotate(13) scale(.85)"/>
+  <use href="#flower" transform="translate(82 103) rotate(-19) scale(.8)"/>
+  <use href="#flower" transform="translate(104 204) rotate(16) scale(.5)"/>
+  <use href="#grapes" transform="translate(260 323) rotate(-18)"/>
+  <use href="#grapes" transform="translate(131 165) rotate(14) scale(.7)"/>
+  <g fill="#f4ece0" stroke="#b68b81" stroke-width="1">
+    <ellipse cx="323" cy="361" rx="5" ry="9" transform="rotate(28 323 361)"/>
+    <ellipse cx="143" cy="148" rx="4" ry="7" transform="rotate(-12 143 148)"/>
+  </g>
+</svg>

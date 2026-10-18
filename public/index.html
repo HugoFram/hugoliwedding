@@ -26,28 +26,28 @@
     </header>
 
     <main id="contenu">
-      <section class="hero wrap" id="accueil" aria-labelledby="hero-title">
+      <section class="hero" id="accueil" aria-labelledby="hero-title">
+        <img class="hero-photo" src="./assets/hugo-olivia.jpg" width="1600" height="739" alt="" fetchpriority="high">
+        <div class="hero-shade" aria-hidden="true"></div>
+        <img class="hero-botanical" src="./assets/vigne-fleurie.svg" width="360" height="500" alt="" aria-hidden="true">
+        <div class="hero-inner wrap">
         <div class="hero-copy">
           <p class="eyebrow"><span class="small-line" aria-hidden="true"></span> Nous nous marions</p>
-          <h1 id="hero-title">Hugo <span class="ampersand">&</span><br>Olivia</h1>
-          <p class="hero-intro">Une belle histoire.<br>Un grand oui. Et vous.</p>
+          <h1 id="hero-title">Hugo <span class="ampersand">&</span><br> Olivia</h1>
+          <p class="hero-intro">Une belle histoire.<br> Un grand oui. Et vous.</p>
           <div class="hero-date">
             <span class="date-day">10</span>
             <p>Samedi<br><strong>juin 2028</strong></p>
           </div>
           <a class="button button-dark" href="#lieu">Découvrir le lieu <span aria-hidden="true">↓</span></a>
         </div>
-        <figure class="hero-art">
-          <div class="art-frame">
-            <img src="./assets/chateau.svg" width="640" height="760" alt="Illustration d’un château au milieu des arbres, avec les montagnes de Savoie en arrière-plan.">
-          </div>
-          <span class="art-seal" aria-hidden="true"><span>H & O</span><span>10 · 06 · 28</span></span>
-          <figcaption>Un oui, au pied des montagnes.</figcaption>
-        </figure>
         <a href="#grand-jour" class="hero-scroll"><span aria-hidden="true">↓</span> Le début de la suite</a>
+        <span class="hero-signature" aria-hidden="true">H <i>&</i> O<span>10 · 06 · 2028</span></span>
+        </div>
       </section>
 
       <section class="countdown-section" id="grand-jour" aria-labelledby="countdown-title">
+        <img class="countdown-botanical" src="./assets/vigne-fleurie.svg" width="360" height="500" alt="" aria-hidden="true" loading="lazy">
         <div class="wrap countdown-layout">
           <div class="countdown-copy">
             <p class="eyebrow">Le bonheur se rapproche</p>
@@ -71,9 +71,13 @@
           <p class="eyebrow">Un écrin pour notre histoire</p>
           <h2 id="venue-title">Rendez-vous<br><em>au château.</em></h2>
           <p>Un château, de la verdure et les montagnes de Savoie en toile de fond. C’est ici que nous avons choisi de célébrer notre mariage avec vous.</p>
-          <span class="venue-flower" aria-hidden="true">✳</span>
+          <figure class="venue-illustration">
+            <img src="./assets/chateau.svg" width="640" height="760" alt="Illustration d’un château parmi les arbres et les montagnes de Savoie." loading="lazy">
+            <figcaption>Un oui, au pied des montagnes.</figcaption>
+          </figure>
         </div>
         <div class="venue-details">
+          <img class="venue-botanical" src="./assets/vigne-fleurie.svg" width="360" height="500" alt="" aria-hidden="true" loading="lazy">
           <p class="eyebrow venue-region">Challes-les-Eaux · Savoie</p>
           <h3>Château des<br>Comtes de Challes</h3>
           <address>247, montée du Château<br>73190 Challes-les-Eaux, France</address>
@@ -84,6 +88,7 @@
       </section>
 
       <section class="save-date" aria-labelledby="save-date-title">
+        <img class="save-date-botanical" src="./assets/vigne-fleurie.svg" width="360" height="500" alt="" aria-hidden="true" loading="lazy">
         <div class="wrap save-date-layout">
           <div><p class="eyebrow">À vos agendas</p><h2 id="save-date-title">Gardez-nous cette journée.</h2></div>
           <a class="button button-outline" href="./hugoli-10-juin-2028.ics" download>Ajouter à mon calendrier <span aria-hidden="true">+</span></a>
