@@ -4,7 +4,7 @@ Le test est installé sur le Raspberry Pi existant. L’OS et les services sont 
 
 L’aperçu local est **http://192.168.1.183:2585/**, accessible depuis le réseau de la maison uniquement. Aucune redirection du port 2585 sur le routeur n’est nécessaire.
 
-L’URL publique prévue est **https://hugoli-mariage-test.frammery.com/**. Il reste à confirmer les ports internes du routeur, modifier le DNS de test et activer Let’s Encrypt. Tant que ces étapes sont incomplètes, le contrôle HTTPS final du workflow peut échouer alors que la version est déjà installée et consultable en local.
+Le test public est disponible sur **https://hugoli-mariage-test.frammery.com/**. Le DNS pointe vers le Pi ; les ports publics 80 et 443 sont redirigés vers les mêmes ports internes. HTTP redirige vers HTTPS, en conservant les validations ACME sur HTTP. Le certificat Let’s Encrypt a été délivré et son renouvellement automatique a été testé par une simulation réussie.
 
 **La production Raspberry Pi est désactivée jusqu’à validation du test.** Son workflow manuel s’arrête avec un message explicite. Un changement de `main` ne publie jamais en production.
 

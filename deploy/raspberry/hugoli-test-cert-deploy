@@ -1,0 +1,10 @@
+#!/bin/sh
+# Certbot discovers this root-owned hook automatically. Other lineages are ignored.
+set -eu
+export LC_ALL=C
+case "${RENEWED_LINEAGE:-}" in
+  /etc/letsencrypt/live/hugoli-mariage-test.frammery.com)
+    /usr/sbin/apache2ctl configtest
+    /usr/sbin/apache2ctl graceful
+    ;;
+esac

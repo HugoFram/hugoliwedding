@@ -7,6 +7,10 @@ cd -- "$(dirname -- "$0")"
 test "$(id -u)" = 0
 test -f "${1:?Supply the initial release tar archive}"
 initial_archive=$(readlink -f -- "$1")
+if test -e /etc/apache2/sites-enabled/hugoli-test-https.conf; then
+  echo 'HTTPS is already enabled. Do not rerun the initial HTTP bootstrap.' >&2
+  exit 1
+fi
 if test -e /var/www/hugoli && ! test -f /etc/hugoli-deploy/owned-test-installation; then
   echo 'Existing HugOli directory is not owned by this installer.' >&2
   exit 1
