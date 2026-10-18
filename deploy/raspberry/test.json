@@ -1,6 +1,0 @@
-{
-  "repository": "https://github.com/HugoFram/hugoliwedding.git",
-  "branch": "site-test",
-  "root": "/var/www/hugoli/test",
-  "state": "/var/lib/hugoli-deploy"
-}
