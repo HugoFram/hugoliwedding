@@ -20,7 +20,7 @@ Installation du test le 18 octobre 2026, via SSH sur `pi@192.168.1.183`. L’OS 
 
 Le compte système `hugoli-deploy` n’a ni shell interactif ni accès sudo. Il écrit dans ses nouveaux dossiers. Le service systemd ajoute `NoNewPrivileges`, `ProtectHome` et `ProtectSystem=strict`, avec deux chemins d’écriture autorisés. Apache peut lire les fichiers sans droits d’écriture ouverts à tous. Les `.htaccess` sont ignorés ; le type MIME `.mjs` et les règles d’accès sont dans la configuration Apache détenue par root.
 
-L’agent vérifie le dépôt et la destination, refuse la production, les chemins sortants, les liens dans les archives et les empreintes incorrectes. Il n’exécute aucun fichier publié par GitHub. Il conserve les anciennes ressources et bascule l’index en dernier.
+L’agent vérifie le dépôt et la destination, refuse les mélanges de chemins entre test et production, les chemins sortants, les liens dans les archives et les empreintes incorrectes. Il n’exécute aucun fichier publié par GitHub. Il conserve les anciennes ressources et bascule l’index en dernier.
 
 ## Préservation des applications existantes
 
@@ -48,4 +48,30 @@ La sauvegarde avant activation HTTPS est `/var/backups/hugoli-test-https-2026101
 
 Les sources comprennent `enable-test-https.sh`, à utiliser après obtention du certificat. L’installateur HTTP initial refuse désormais de s’exécuter si HTTPS est déjà actif, pour ne pas retirer la redirection. Pour désactiver seulement le nouveau HTTPS, retirer le lien `/etc/apache2/sites-enabled/hugoli-test-https.conf`, restaurer la configuration HTTP du test depuis cette sauvegarde, contrôler la syntaxe et effectuer un rechargement gracieux. Le certificat et les versions du site peuvent rester en place.
 
-Le test public est **https://hugoli-mariage-test.frammery.com/** et l’aperçu local reste **http://192.168.1.183:2585/**. La production attend sa validation.
+Le test public est **https://hugoli-mariage-test.frammery.com/** et l’aperçu local reste **http://192.168.1.183:2585/**. La production a été autorisée et activée le même jour.
+
+## Production activée le 18 octobre 2026
+
+La production est indépendante du test :
+
+| Élément | Emplacement |
+| --- | --- |
+| Racine du site | `/var/www/hugoli/production/public` |
+| Versions conservées | `/var/www/hugoli/production/versions` |
+| Compte système dédié | `hugoli-production`, sans shell interactif ni sudo |
+| État et cache Git | `/var/lib/hugoli-production-deploy` |
+| Paramètres détenus par root | `/etc/hugoli-deploy/production.json` |
+| Branche publiée | `site-production` |
+| Service et minuteur | `hugoli-production-pull.{service,timer}` |
+| Hôtes Apache | `hugoli-production-http.conf`, `hugoli-z-production-https.conf` |
+| Hook Certbot | `/etc/letsencrypt/renewal-hooks/deploy/hugoli-production-cert-deploy` |
+
+L’agent Python commun reste installé par root dans `/opt/hugoli-deploy/pull.py`. Les deux services utilisent des comptes, verrous, caches et chemins d’écriture séparés. La configuration TLS de production est chargée après celle du test pour conserver l’hôte TLS par défaut existant. Aucun nouveau port réseau n’a été ajouté pour la production.
+
+DNS vérifié sur les deux serveurs STRATO : A de `hugoli-mariage.frammery.com` vers `31.164.116.82`, sans AAAA. Le certificat de production a été obtenu séparément par webroot et expire le 16 janvier 2027. Sa simulation de renouvellement a réussi ; le minuteur Certbot existant et le nouveau hook limité à ce certificat assurent son renouvellement et le rechargement gracieux d’Apache. Les autres certificats restent inchangés.
+
+Sauvegardes root avant les changements : `/var/backups/hugoli-production-20261018-182929/` et `/var/backups/hugoli-production-https-20261018-183036/`. Les contrôles des anciennes applications, des PID principaux et du HTML HTTPS du test ont passé après les deux activations.
+
+Les scripts `install-production.sh` et `enable-production-https.sh` permettent de reproduire l’ajout sur cette installation. Le premier exige une archive et l’identifiant explicite de la version approuvée ; le second exige le certificat déjà émis. Ils ne modifient pas l’OS, les anciennes configurations, les ports du routeur ou les règles UFW. Le compte de production n’a pas accès en écriture au test.
+
+Pour désactiver l’hébergement de production, arrêter son minuteur et désactiver uniquement ses deux liens sous `sites-enabled`, puis contrôler la syntaxe Apache avant un rechargement gracieux. Cela laisse le test et les anciens sites configurés. Les fichiers et certificats peuvent être conservés pour une reprise.

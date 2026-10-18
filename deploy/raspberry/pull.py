@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pull static test releases. Compatible with Python 3.7; standard library only."""
+"""Pull static releases into isolated environments. Python 3.7; standard library only."""
 import argparse
 import fcntl
 import hashlib
@@ -109,22 +109,29 @@ def git(state, *arguments):
                                    stderr=subprocess.STDOUT, timeout=40)
 
 
+def validate_config(config):
+    targets = {
+        "site-test": ("test", "/var/www/hugoli/test", "/var/lib/hugoli-deploy"),
+        "site-production": ("production", "/var/www/hugoli/production", "/var/lib/hugoli-production-deploy"),
+    }
+    target = targets.get(config.get("branch"))
+    if (target is None or config.get("repository") != "https://github.com/HugoFram/hugoliwedding.git"
+            or config.get("root") != target[1] or config.get("state") != target[2]):
+        raise ValueError("Unexpected deployment target")
+    return target[0]
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="/etc/hugoli-deploy/test.json")
     args = parser.parse_args()
     config = json.loads(Path(args.config).read_text())
-    # Test only until the user has validated it. No production path is accepted.
-    if (config.get("root") != "/var/www/hugoli/test"
-            or config.get("branch") != "site-test"
-            or config.get("repository") != "https://github.com/HugoFram/hugoliwedding.git"
-            or config.get("state") != "/var/lib/hugoli-deploy"):
-        raise ValueError("Unexpected deployment target")
+    environment = validate_config(config)
     root, state = Path(config["root"]), Path(config["state"])
     if root.is_symlink() or state.is_symlink():
         raise ValueError("Deployment roots must not be symlinks")
     state.mkdir(parents=True, exist_ok=True)
-    with (state / "test.lock").open("w") as lock:
+    with (state / (environment + ".lock")).open("w") as lock:
         try:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError:
@@ -139,18 +146,18 @@ def main():
         # An absent branch is normal before the first GitHub publication.
         exists = git(state, "ls-remote", "--heads", "origin", branch)
         if not exists.strip():
-            print("Waiting for the first site-test publication")
+            print("Waiting for the first " + config["branch"] + " publication")
             return
         git(state, "fetch", "--depth=1", "origin", branch)
         commit = git(state, "rev-parse", "FETCH_HEAD").decode().strip()
-        applied = state / "test-applied-commit"
+        applied = state / (environment + "-applied-commit")
         if applied.exists() and applied.read_text().strip() == commit:
-            print("Test already current: " + commit)
+            print(environment + " already current: " + commit)
             return
-        manifest, files = validate_payload(git(state, "archive", "--format=tar", "FETCH_HEAD"))
+        manifest, files = validate_payload(git(state, "-c", "core.autocrlf=false", "archive", "--format=tar", "FETCH_HEAD"))
         install_payload(root, manifest, files)
         atomic_write(applied, (commit + "\n").encode())
-        print("Test deployed: " + manifest["releaseId"])
+        print(environment + " deployed: " + manifest["releaseId"])
 
 
 if __name__ == "__main__":

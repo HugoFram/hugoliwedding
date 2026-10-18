@@ -6,7 +6,7 @@ L’aperçu local est **http://192.168.1.183:2585/**, accessible depuis le rése
 
 Le test public est disponible sur **https://hugoli-mariage-test.frammery.com/**. Le DNS pointe vers le Pi ; les ports publics 80 et 443 sont redirigés vers les mêmes ports internes. HTTP redirige vers HTTPS, en conservant les validations ACME sur HTTP. Le certificat Let’s Encrypt a été délivré et son renouvellement automatique a été testé par une simulation réussie.
 
-**La production Raspberry Pi est désactivée jusqu’à validation du test.** Son workflow manuel s’arrête avec un message explicite. Un changement de `main` ne publie jamais en production.
+**La production est active sur https://hugoli-mariage.frammery.com/.** La première version publiée est celle du test validé : exécution `39144787381`, commit `aaf425ae78c5e927f1d991d005413ab078afcd46`, tentative `1`. Un changement de `main` ne publie jamais en production.
 
 ## Fonctionnement quotidien
 
@@ -62,8 +62,22 @@ PY
 
 Le statut est supprimé pour ne pas annoncer une version différente de la page restaurée. Les ressources restent présentes. Laisser le minuteur arrêté pendant le diagnostic ; une nouvelle publication sur `main` permettra de reprendre avec une version corrigée. Si le minuteur reprend sans nouvelle publication, l’agent conserve la page restaurée tant que le commit de publication n’a pas changé.
 
-## Production après validation
+## Publier une version validée en production
 
-La prochaine étape sera une promotion manuelle des **mêmes fichiers validés en test**, vers une racine et une branche séparées. La production ne devra pas reconstruire le dernier état de `main`. Cette étape, son certificat et son DNS seront mis en place après validation par Hugo.
+1. Attendre le succès d’une exécution de **Déployer en test**, puis valider le site visuellement. Retenir le numéro d’exécution dans son URL GitHub.
+2. Ouvrir [Publier en production](https://github.com/HugoFram/hugoliwedding/actions/workflows/deploy-production.yml), puis **Run workflow** sur la branche `main`.
+3. Renseigner `test_run_id` avec ce numéro. Le workflow vérifie que le test provient de ce dépôt, sur `main`, et qu’il a réussi.
+4. GitHub télécharge l’archive `hugoli-site-<tentative>` de cette exécution, vérifie son identité et ses empreintes, puis la publie dans `site-production`. **Aucune reconstruction du site n’est effectuée.**
+5. Le Pi récupère cette branche avec un compte distinct, sans droits d’écriture sur le test. Le workflow attend puis vérifie chaque fichier public en HTTPS.
+
+Les futurs changements du test ne modifient pas la production. Les promotions de production sont sérialisées. Pour revenir à une version précédente, relancer ce workflow avec le numéro d’un ancien test réussi dont l’archive est encore disponible (90 jours).
+
+La première publication a été autorisée par Hugo dans le chat et réalisée en créant `site-production` sur le commit de publication validé `496ead36e7f294084077924eca229852d39ac248`, après les mêmes vérifications d’origine et d’empreintes. La récupération automatique par le Pi et les fichiers HTTPS ont été contrôlés. Les publications suivantes utilisent le workflow manuel ci-dessus.
+
+## Diagnostic et retour arrière en production
+
+Les commandes de diagnostic et d’arrêt du minuteur sont les mêmes que pour le test, avec `hugoli-production-pull`. Le compte est `hugoli-production`, la racine `/var/www/hugoli/production`, et le cache Git `/var/lib/hugoli-production-deploy`.
+
+Pour une restauration locale urgente, arrêter le minuteur de production, attendre la fin du service, puis adapter la procédure Python ci-dessus avec ce compte et cette racine. Arrêter le minuteur du test ne bloque pas celui de production, et inversement. Une restauration via le workflow manuel est préférable lorsque l’archive est disponible.
 
 Voir [RASPBERRY.md](RASPBERRY.md) pour l’installation et les sauvegardes. [STRATO.md](STRATO.md) décrit l’ancien hébergement SFTP.

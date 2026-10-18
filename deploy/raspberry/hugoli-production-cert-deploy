@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+export LC_ALL=C
+case "${RENEWED_LINEAGE:-}" in
+  /etc/letsencrypt/live/hugoli-mariage.frammery.com)
+    /usr/sbin/apache2ctl configtest
+    /usr/sbin/apache2ctl graceful
+    ;;
+esac

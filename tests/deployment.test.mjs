@@ -4,6 +4,7 @@ import { mkdtemp, readFile, writeFile, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { spawnSync } from 'node:child_process';
 import { createRelease, verifyRelease } from '../scripts/release.mjs';
 import { getConfig, createBatch } from '../scripts/deploy-sftp.mjs';
 import { validateRun } from '../scripts/validate-promotion.mjs';
@@ -83,4 +84,23 @@ test('seul un déploiement de test réussi du dépôt peut être promu', () => {
     { event: 'pull_request' }, { path: '.github/workflows/ci.yml' },
     { head_repository: { full_name: 'someone/fork' } }, { run_attempt: 0 },
   ]) assert.throws(() => validateRun({ ...successfulRun, ...overrides }, 'HugoFram/hugoliwedding'));
+});
+
+test('la publication production refuse une identité absente, différente ou un déclenchement automatique', async t => {
+  const { directory } = await fixture(t);
+  const publisher = fileURLToPath(new URL('../scripts/publish-raspberry.mjs', import.meta.url));
+  const env = { ...process.env, GITHUB_REPOSITORY: 'HugoFram/hugoliwedding', GITHUB_REF: 'refs/heads/main',
+    GITHUB_EVENT_NAME: 'workflow_dispatch', SOURCE_SHA: identity.sha, SOURCE_RUN_ID: identity.runId,
+    SOURCE_ATTEMPT: identity.attempt, GH_TOKEN: 'unused-in-rejection-tests' };
+  for (const [overrides, message] of [
+    [{ SOURCE_RUN_ID: '' }, /exige l’identité/],
+    [{ SOURCE_SHA: 'b'.repeat(40) }, /correspond pas à sha/],
+    [{ GITHUB_EVENT_NAME: 'push' }, /lancée manuellement/],
+  ]) {
+    const result = spawnSync(process.execPath, [publisher, directory, 'production'], {
+      env: { ...env, ...overrides }, encoding: 'utf8', timeout: 10000,
+    });
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, message);
+  }
 });

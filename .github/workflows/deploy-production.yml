@@ -2,15 +2,59 @@ name: Publier en production
 
 on:
   workflow_dispatch:
+    inputs:
+      test_run_id:
+        description: Numéro de l’exécution de test réussie et validée
+        required: true
+        type: string
 
 permissions:
   contents: read
+  actions: read
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
 
 jobs:
-  awaiting-test-validation:
+  promote:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+    environment:
+      name: production
+      url: https://hugoli-mariage.frammery.com/
     steps:
-      - name: Production en attente de validation
-        run: |
-          echo '::error::La production Raspberry Pi est désactivée. Valider le site de test avant sa mise en place.'
-          exit 1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '22'
+      - name: Vérifier l’origine de la version de test
+        id: source
+        run: node scripts/validate-promotion.mjs "$TEST_RUN_ID"
+        env:
+          TEST_RUN_ID: ${{ inputs.test_run_id }}
+          GH_TOKEN: ${{ github.token }}
+      - name: Télécharger les fichiers exacts du test
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: hugoli-site-${{ steps.source.outputs.attempt }}
+          path: artifacts/release
+          run-id: ${{ steps.source.outputs.run_id }}
+          github-token: ${{ github.token }}
+      - name: Publier la version validée pour le Raspberry Pi
+        run: node scripts/publish-raspberry.mjs artifacts/release production
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+          SOURCE_RUN_ID: ${{ steps.source.outputs.run_id }}
+          SOURCE_ATTEMPT: ${{ steps.source.outputs.attempt }}
+      - name: Vérifier les fichiers réellement servis en production
+        run: node scripts/verify-deployment.mjs production artifacts/release
+        env:
+          VERIFY_WAIT_SECONDS: '180'

@@ -6,7 +6,7 @@ import tarfile
 import tempfile
 import unittest
 
-from pull import validate_payload, install_payload
+from pull import validate_payload, install_payload, validate_config
 
 
 def payload(attempt="1", corrupt=False, extra=None):
@@ -30,6 +30,15 @@ def payload(attempt="1", corrupt=False, extra=None):
 
 
 class DeploymentTests(unittest.TestCase):
+    def test_environment_paths_cannot_be_crossed(self):
+        config = {"branch": "site-production", "root": "/var/www/hugoli/production",
+                  "state": "/var/lib/hugoli-production-deploy",
+                  "repository": "https://github.com/HugoFram/hugoliwedding.git"}
+        self.assertEqual(validate_config(config), "production")
+        for key, wrong in (("root", "/var/www/hugoli/test"), ("state", "/var/lib/hugoli-deploy"),
+                           ("branch", "main"), ("repository", "https://example.com/other.git")):
+            with self.assertRaises(ValueError): validate_config(dict(config, **{key: wrong}))
+
     def test_valid_release_and_status(self):
         manifest, files = validate_payload(payload())
         with tempfile.TemporaryDirectory() as temporary:

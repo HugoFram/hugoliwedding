@@ -1,0 +1,6 @@
+{
+  "repository": "https://github.com/HugoFram/hugoliwedding.git",
+  "branch": "site-production",
+  "root": "/var/www/hugoli/production",
+  "state": "/var/lib/hugoli-production-deploy"
+}

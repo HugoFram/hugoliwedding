@@ -1,0 +1,20 @@
+[Unit]
+Description=Fetch approved HugOli production versions from GitHub
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=hugoli-production
+Group=hugoli-production
+Environment=LC_ALL=C
+Environment=GIT_TERMINAL_PROMPT=0
+ExecStart=/usr/bin/python3 /opt/hugoli-deploy/pull.py --config /etc/hugoli-deploy/production.json
+TimeoutStartSec=90
+UMask=0022
+Nice=10
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/hugoli-production-deploy /var/www/hugoli/production
