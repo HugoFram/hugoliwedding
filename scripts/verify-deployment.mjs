@@ -4,7 +4,8 @@ import { digest, verifyRelease } from './release.mjs';
 const target = targets[process.argv[2]];
 if (!target) throw new Error('Destination inconnue.');
 const manifest = await verifyRelease(process.argv[3] ?? 'artifacts/release');
-const base = new URL(target.url);
+const base = new URL(process.env.VERIFY_BASE_URL || target.url);
+const deadline = Date.now() + Math.min(300, Math.max(0, Number(process.env.VERIFY_WAIT_SECONDS) || 0)) * 1000;
 
 // Verify actual HTML and resources over HTTPS, with certificate checks enabled.
 for (const [filename, expectedDigest] of Object.entries(manifest.files)) {
@@ -12,7 +13,7 @@ for (const [filename, expectedDigest] of Object.entries(manifest.files)) {
   const url = new URL(filename, base);
   url.searchParams.set('hugoli-check', manifest.releaseId);
   let verified = false;
-  for (let attempt = 0; attempt < 4; attempt++) {
+  for (let attempt = 0; ; attempt++) {
     try {
       const response = await fetch(url, { signal: AbortSignal.timeout(15000), cache: 'no-store', redirect: 'error' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -23,10 +24,10 @@ for (const [filename, expectedDigest] of Object.entries(manifest.files)) {
       verified = true;
       break;
     } catch (error) {
-      if (attempt === 3) throw new Error(`${filename} : ${error.message}`);
+      if (attempt >= 3 && Date.now() >= deadline) throw new Error(`${filename} : ${error.message}`);
       await new Promise(resolve => setTimeout(resolve, 3000));
     }
   }
   if (!verified) throw new Error(`Échec de vérification : ${filename}`);
 }
-console.log(`HTTPS vérifié : ${target.url} — ${manifest.releaseId}`);
+console.log(`Fichiers vérifiés : ${base.href} — ${manifest.releaseId}`);

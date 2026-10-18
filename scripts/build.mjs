@@ -11,4 +11,4 @@ if (path.dirname(destination) !== path.resolve(root) || path.basename(destinatio
 await rm(destination, { recursive: true, force: true });
 await mkdir(destination, { recursive: true });
 await cp(path.join(root, 'public'), destination, { recursive: true });
-console.log('Site prêt dans dist/ — déposer son contenu chez STRATO.');
+console.log('Site prêt dans dist/.');

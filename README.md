@@ -10,7 +10,7 @@ Site de mariage en français pour **Hugo Frammery et Olivia Delage**, le **samed
 - Ajout au calendrier : événement sur la journée entière.
 - Mise en page mobile et ordinateur, navigation au clavier, mouvements réduits.
 
-Le site est statique : **HTML, CSS et JavaScript natifs, sans dépendance**. Il ne nécessite ni base de données ni serveur Node.js chez STRATO. L’illustration SVG est originale et évocatrice ; ce n’est pas une représentation fidèle du château. Aucun service externe, police distante, outil statistique ou carte intégrée n’est chargé à l’ouverture de la page. Les liens externes s’ouvrent uniquement à la demande du visiteur.
+Le site est statique : **HTML, CSS et JavaScript natifs, sans dépendance**. Il ne nécessite ni base de données ni serveur Node.js sur le Raspberry Pi. L’illustration SVG est originale et évocatrice ; ce n’est pas une représentation fidèle du château. Aucun service externe, police distante, outil statistique ou carte intégrée n’est chargé à l’ouverture de la page. Les liens externes s’ouvrent uniquement à la demande du visiteur.
 
 ## Travailler en local
 
@@ -47,6 +47,6 @@ Si la date change, mettre à jour le HTML (texte et métadonnées), le compte à
 
 Voir [le pipeline test → production](docs/DEPLOYMENT.md), [le guide STRATO](docs/STRATO.md) et [le plan du projet](docs/PLAN.md).
 
-Les sous-domaines `hugoli-mariage-test.frammery.com` et `hugoli-mariage.frammery.com` sont associés à leurs dossiers respectifs chez STRATO. Après configuration du secret SFTP et des certificats HTTPS, chaque modification de `main` est déployée sur le site de test. Les paramètres publics de connexion sont déjà renseignés. La publication en production est une action manuelle réutilisant exactement une version de test réussie. La procédure et le retour à une ancienne version sont décrits dans le guide du pipeline.
+Le test est hébergé sur le Raspberry Pi existant, sans mise à niveau de l’OS. Chaque modification de `main` prépare une version que le Pi récupère automatiquement depuis GitHub. L’aperçu local est http://192.168.1.183:2585/. Le DNS public et Let’s Encrypt restent à finaliser. La production est désactivée jusqu’à validation du test. Voir aussi [l’installation Raspberry Pi](docs/RASPBERRY.md).
 
 Le code comprend une directive `noindex, nofollow` pour demander aux moteurs de recherche de ne pas indexer le site. Cette directive ne limite pas l’accès. Le dépôt GitHub étant public, son contenu est également public. Si une restriction d’accès est souhaitée plus tard, la définir au niveau de l’hébergement avant d’ajouter des données d’invités.
