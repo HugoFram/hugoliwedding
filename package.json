@@ -1,0 +1,14 @@
+{
+  "name": "hugoliwedding",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Le mariage d’Hugo et Olivia — 10 juin 2028",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node --test",
+    "check": "node --check public/assets/app.mjs && node --check public/assets/countdown.mjs && node --check scripts/serve.mjs && node --check scripts/build.mjs"
+  }
+}

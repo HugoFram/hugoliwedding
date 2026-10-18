@@ -1,0 +1,4 @@
+# Serve native JavaScript modules with the right MIME type on Apache/STRATO.
+<IfModule mod_mime.c>
+  AddType text/javascript .mjs
+</IfModule>
