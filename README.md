@@ -4,7 +4,7 @@ Site de mariage en français pour **Hugo Frammery et Olivia Delage**, le **samed
 
 ## Première version
 
-- Accueil avec la photo d’Hugo et Olivia en fond, palette ivoire et vert profond, fleurs et motifs de vigne dessinés en SVG.
+- Accueil avec la photo d’Hugo et Olivia en fond, palette ivoire et vert profond.
 - Compte à rebours vers le début du 10 juin 2028 en France, à minuit (UTC+02:00). Aucune heure de cérémonie n’est annoncée.
 - Adresse du lieu, itinéraire Google Maps et lien vers le site officiel.
 - Ajout au calendrier : événement sur la journée entière.
@@ -39,7 +39,6 @@ Le dossier `dist/` contient uniquement les fichiers à envoyer chez l’héberge
 | Date et états du compte à rebours | `public/assets/countdown.mjs` |
 | Affichage du compte à rebours | `public/assets/app.mjs` |
 | Photo de fond | `public/assets/hugo-olivia.jpg` |
-| Motifs de vigne et fleurs | `public/assets/vigne-fleurie.svg` |
 | Illustration et icône | `public/assets/chateau.svg`, `public/assets/favicon.svg` |
 | Événement de calendrier | `public/hugoli-10-juin-2028.ics` |
 
