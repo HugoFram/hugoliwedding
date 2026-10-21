@@ -11,10 +11,10 @@
     <meta property="og:title" content="HugOli — On se dit oui !">
     <meta property="og:description" content="Hugo & Olivia · 10 juin 2028 · Château des Comtes de Challes">
     <title>HugOli — Hugo & Olivia · 10 juin 2028</title>
-    <link rel="icon" type="image/svg+xml" href="./releases/58efb53b4e736f7fe21c967afb67f18c59c0e92b-39264767750-1/assets/favicon.svg">
-    <link rel="stylesheet" href="./releases/58efb53b4e736f7fe21c967afb67f18c59c0e92b-39264767750-1/assets/style.css">
-    <script type="module" src="./releases/58efb53b4e736f7fe21c967afb67f18c59c0e92b-39264767750-1/assets/app.mjs"></script>
-    <meta name="hugoli-release" content="58efb53b4e736f7fe21c967afb67f18c59c0e92b-39264767750-1">
+    <link rel="icon" type="image/svg+xml" href="./releases/130475b344b8d4805a97338f6691655321421000-39684403221-1/assets/favicon.svg">
+    <link rel="stylesheet" href="./releases/130475b344b8d4805a97338f6691655321421000-39684403221-1/assets/style.css">
+    <script type="module" src="./releases/130475b344b8d4805a97338f6691655321421000-39684403221-1/assets/app.mjs"></script>
+    <meta name="hugoli-release" content="130475b344b8d4805a97338f6691655321421000-39684403221-1">
   </head>
   <body>
     <a class="skip-link" href="#contenu">Aller au contenu</a>
@@ -28,7 +28,7 @@
 
     <main id="contenu">
       <section class="hero" id="accueil" aria-labelledby="hero-title">
-        <img class="hero-photo" src="./releases/58efb53b4e736f7fe21c967afb67f18c59c0e92b-39264767750-1/assets/hugo-olivia.jpg" width="1600" height="739" alt="" fetchpriority="high">
+        <img class="hero-photo" src="./releases/130475b344b8d4805a97338f6691655321421000-39684403221-1/assets/hugo-olivia.jpg" width="1600" height="739" alt="" fetchpriority="high">
         <div class="hero-shade" aria-hidden="true"></div>
         <div class="hero-inner wrap">
         <div class="hero-copy">
@@ -39,7 +39,10 @@
             <span class="date-day">10</span>
             <p>Samedi<br><strong>juin 2028</strong></p>
           </div>
-          <a class="button button-dark" href="#lieu">Découvrir le lieu <span aria-hidden="true">↓</span></a>
+          <div class="hero-actions">
+            <button class="button button-dark" type="button" id="rsvp-open" aria-haspopup="dialog" aria-controls="rsvp-dialog" hidden>RSVP <span aria-hidden="true">♡</span></button>
+            <a class="button button-hero-outline" href="#lieu">Découvrir le lieu <span aria-hidden="true">↓</span></a>
+          </div>
         </div>
         <a href="#grand-jour" class="hero-scroll"><span aria-hidden="true">↓</span> Le début de la suite</a>
         <span class="hero-signature" aria-hidden="true">H <i>&</i> O<span>10 · 06 · 2028</span></span>
@@ -71,7 +74,7 @@
           <h2 id="venue-title">Rendez-vous<br><em>au château.</em></h2>
           <p>Un château, de la verdure et les montagnes de Savoie en toile de fond. C’est ici que nous avons choisi de célébrer notre mariage avec vous.</p>
           <figure class="venue-illustration">
-            <img src="./releases/58efb53b4e736f7fe21c967afb67f18c59c0e92b-39264767750-1/assets/chateau.svg" width="640" height="760" alt="Illustration d’un château parmi les arbres et les montagnes de Savoie." loading="lazy">
+            <img src="./releases/130475b344b8d4805a97338f6691655321421000-39684403221-1/assets/chateau.svg" width="640" height="760" alt="Illustration d’un château parmi les arbres et les montagnes de Savoie." loading="lazy">
             <figcaption>Un oui, au pied des montagnes.</figcaption>
           </figure>
         </div>
@@ -88,10 +91,29 @@
       <section class="save-date" aria-labelledby="save-date-title">
         <div class="wrap save-date-layout">
           <div><p class="eyebrow">À vos agendas</p><h2 id="save-date-title">Bloquez la date</h2></div>
-          <a class="button button-outline" href="./releases/58efb53b4e736f7fe21c967afb67f18c59c0e92b-39264767750-1/hugoli-10-juin-2028.ics" download>Ajouter à mon calendrier <span aria-hidden="true">+</span></a>
+          <a class="button button-outline" href="./releases/130475b344b8d4805a97338f6691655321421000-39684403221-1/hugoli-10-juin-2028.ics" download>Ajouter à mon calendrier <span aria-hidden="true">+</span></a>
         </div>
       </section>
     </main>
+
+    <dialog class="rsvp-dialog" id="rsvp-dialog" aria-labelledby="rsvp-title" aria-describedby="rsvp-disclaimer">
+      <div class="rsvp-shell">
+        <div class="rsvp-top">
+          <p class="eyebrow">Le petit quiz des mariés</p>
+          <button class="rsvp-close" id="rsvp-close" type="button" aria-label="Fermer le questionnaire">×</button>
+        </div>
+        <div class="rsvp-progress-label"><span id="rsvp-step">Question 1 sur 4</span><span aria-hidden="true">H & O</span></div>
+        <progress id="rsvp-progress" max="4" value="1" aria-label="Progression du questionnaire"></progress>
+        <div class="rsvp-stage" id="rsvp-stage">
+          <span class="rsvp-symbol" id="rsvp-symbol" aria-hidden="true">♡</span>
+          <h2 id="rsvp-title" tabindex="-1"></h2>
+          <p class="rsvp-hint" id="rsvp-hint"></p>
+          <div class="rsvp-answers" id="rsvp-answers"></div>
+          <p class="rsvp-feedback" id="rsvp-feedback" role="status" aria-live="polite"></p>
+        </div>
+        <p class="rsvp-disclaimer" id="rsvp-disclaimer">Juste pour rire : ce jeu ne confirme pas votre présence.</p>
+      </div>
+    </dialog>
 
     <footer class="footer wrap">
       <a class="wordmark" href="#accueil" aria-label="HugOli, retour en haut">Hug<span>O</span>li<span class="wordmark-dot">.</span></a>
