@@ -1,4 +1,5 @@
 import { getCountdown } from './countdown.mjs';
+import { initRsvp } from './rsvp.mjs';
 
 const counter = document.querySelector('#countdown');
 const title = document.querySelector('#countdown-title');
@@ -30,3 +31,4 @@ function updateCountdown() {
 
 updateCountdown();
 setInterval(updateCountdown, 1000);
+initRsvp();

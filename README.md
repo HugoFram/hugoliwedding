@@ -8,6 +8,7 @@ Site de mariage en français pour **Hugo Frammery et Olivia Delage**, le **samed
 - Compte à rebours vers le début du 10 juin 2028 en France, à minuit (UTC+02:00). Aucune heure de cérémonie n’est annoncée.
 - Adresse du lieu, itinéraire Google Maps et lien vers le site officiel.
 - Ajout au calendrier : événement sur la journée entière.
+- Bouton RSVP ouvrant un quiz humoristique de quatre questions : bouton fuyant, seconde chance et confettis. Ce jeu ne collecte aucune donnée et ne confirme aucune présence.
 - Mise en page mobile et ordinateur, navigation au clavier, mouvements réduits.
 
 Le site est statique : **HTML, CSS et JavaScript natifs, sans dépendance**. Il ne nécessite ni base de données ni serveur Node.js sur le Raspberry Pi. L’illustration SVG est originale et évocatrice ; ce n’est pas une représentation fidèle du château. Aucun service externe, police distante, outil statistique ou carte intégrée n’est chargé à l’ouverture de la page. Les liens externes s’ouvrent uniquement à la demande du visiteur.
@@ -38,6 +39,8 @@ Le dossier `dist/` contient uniquement les fichiers à envoyer chez l’héberge
 | Couleurs, typographies, mise en page | `public/assets/style.css` |
 | Date et états du compte à rebours | `public/assets/countdown.mjs` |
 | Affichage du compte à rebours | `public/assets/app.mjs` |
+| Questions et règles du quiz RSVP | `public/assets/rsvp-game.mjs` |
+| Fenêtre et interactions du quiz RSVP | `public/assets/rsvp.mjs` |
 | Photo de fond | `public/assets/hugo-olivia.jpg` |
 | Illustration et icône | `public/assets/chateau.svg`, `public/assets/favicon.svg` |
 | Événement de calendrier | `public/hugoli-10-juin-2028.ics` |

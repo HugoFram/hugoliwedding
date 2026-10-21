@@ -38,7 +38,10 @@
             <span class="date-day">10</span>
             <p>Samedi<br><strong>juin 2028</strong></p>
           </div>
-          <a class="button button-dark" href="#lieu">Découvrir le lieu <span aria-hidden="true">↓</span></a>
+          <div class="hero-actions">
+            <button class="button button-dark" type="button" id="rsvp-open" aria-haspopup="dialog" aria-controls="rsvp-dialog" hidden>RSVP <span aria-hidden="true">♡</span></button>
+            <a class="button button-hero-outline" href="#lieu">Découvrir le lieu <span aria-hidden="true">↓</span></a>
+          </div>
         </div>
         <a href="#grand-jour" class="hero-scroll"><span aria-hidden="true">↓</span> Le début de la suite</a>
         <span class="hero-signature" aria-hidden="true">H <i>&</i> O<span>10 · 06 · 2028</span></span>
@@ -91,6 +94,25 @@
         </div>
       </section>
     </main>
+
+    <dialog class="rsvp-dialog" id="rsvp-dialog" aria-labelledby="rsvp-title" aria-describedby="rsvp-disclaimer">
+      <div class="rsvp-shell">
+        <div class="rsvp-top">
+          <p class="eyebrow">Le petit quiz des mariés</p>
+          <button class="rsvp-close" id="rsvp-close" type="button" aria-label="Fermer le questionnaire">×</button>
+        </div>
+        <div class="rsvp-progress-label"><span id="rsvp-step">Question 1 sur 4</span><span aria-hidden="true">H & O</span></div>
+        <progress id="rsvp-progress" max="4" value="1" aria-label="Progression du questionnaire"></progress>
+        <div class="rsvp-stage" id="rsvp-stage">
+          <span class="rsvp-symbol" id="rsvp-symbol" aria-hidden="true">♡</span>
+          <h2 id="rsvp-title" tabindex="-1"></h2>
+          <p class="rsvp-hint" id="rsvp-hint"></p>
+          <div class="rsvp-answers" id="rsvp-answers"></div>
+          <p class="rsvp-feedback" id="rsvp-feedback" role="status" aria-live="polite"></p>
+        </div>
+        <p class="rsvp-disclaimer" id="rsvp-disclaimer">Juste pour rire : ce jeu ne confirme pas votre présence.</p>
+      </div>
+    </dialog>
 
     <footer class="footer wrap">
       <a class="wordmark" href="#accueil" aria-label="HugOli, retour en haut">Hug<span>O</span>li<span class="wordmark-dot">.</span></a>
