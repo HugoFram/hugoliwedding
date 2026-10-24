@@ -2,7 +2,7 @@
 
 ## Informations confirmées
 
-- Mariés : Hugo Frammery et Olivia Delage ; surnom : HugOli.
+- Mariés : Olivia Delage et Hugo Frammery ; surnom : HugOli.
 - Date : samedi 10 juin 2028.
 - Lieu : Château des Comtes de Challes, à Challes-les-Eaux, Savoie.
 - Langue : français.

@@ -1,10 +1,10 @@
-# HugOli — Hugo & Olivia
+# HugOli — Olivia & Hugo
 
-Site de mariage en français pour **Hugo Frammery et Olivia Delage**, le **samedi 10 juin 2028**, au Château des Comtes de Challes.
+Site de mariage en français pour **Olivia Delage et Hugo Frammery**, le **samedi 10 juin 2028**, au Château des Comtes de Challes.
 
 ## Première version
 
-- Accueil avec la photo d’Hugo et Olivia en fond, palette ivoire et vert profond.
+- Accueil avec la photo d’Olivia et Hugo en fond, palette ivoire et vert profond.
 - Compte à rebours vers le début du 10 juin 2028 en France, à minuit (UTC+02:00). Aucune heure de cérémonie n’est annoncée.
 - Adresse du lieu, itinéraire Google Maps et lien vers le site officiel.
 - Ajout au calendrier : événement sur la journée entière.

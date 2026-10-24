@@ -13,5 +13,5 @@ test('le calendrier réserve uniquement le 10 juin, sans heure de cérémonie in
   assert.match(unfolded, /DTSTART;VALUE=DATE:20280610\r\n/);
   assert.match(unfolded, /DTEND;VALUE=DATE:20280611\r\n/);
   assert.match(unfolded, /LOCATION:Château des Comtes de Challes/);
-  assert.match(unfolded, /SUMMARY:Mariage d’Hugo et Olivia/);
+  assert.match(unfolded, /SUMMARY:Mariage d’Olivia et Hugo/);
 });
